@@ -66,32 +66,25 @@ class Calendar extends Component {
 			currentMonth = month;
 			currentDay = day;
 		}
-		this.setState(
-			{
-				currentYear,
-				currentMonth,
-				currentDay,
-				today,
-				language,
-				theme,
-			},
-			() => {
-				if (this.state.hideDefaultValue)
-					this.formatDate(
-						language === 'NE'
-							? convertFullDateToNepali(currentYear + '-' + currentMonth + '-' + currentDay)
-							: getFullEnglishDate(currentYear + '-' + currentMonth + '-' + currentDay)
-					);
-				else
-					this.props.onChange(
-						this.formatDate(
-							language === 'NE'
-								? convertFullDateToNepali(currentYear + '-' + currentMonth + '-' + currentDay)
-								: getFullEnglishDate(currentYear + '-' + currentMonth + '-' + currentDay)
-						)
-					);
+		const stateUpdate = {
+			currentYear,
+			currentMonth,
+			currentDay,
+			today,
+			language,
+			theme,
+		};
+
+		if (this.state.hideDefaultValue || !this.validateDate(this.props.defaultDate)) {
+			stateUpdate.selectedDate = '';
+			stateUpdate.formatedDate = '';
+		}
+
+		this.setState(stateUpdate, () => {
+			if (this.validateDate(this.props.defaultDate)) {
+				this.props.onChange(this.formatDate(currentYear, currentMonth, currentDay));
 			}
-		);
+		});
 		document.addEventListener('mousedown', this.handleClickOutside);
 	}
 
@@ -256,10 +249,10 @@ class Calendar extends Component {
 				this.state.language === 'NE'
 					? convertFullDateToNepali(
 							this.state.currentYear + '-' + this.state.currentMonth + '-' + englishNumber
-					  )
+						)
 					: getFullEnglishDate(
 							this.state.currentYear + '-' + this.state.currentMonth + '-' + englishNumber
-					  )
+						)
 			)
 		);
 	};

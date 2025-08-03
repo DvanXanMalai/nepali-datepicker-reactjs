@@ -31,7 +31,6 @@
 		"react": "*"
 	},
 	"devDependencies": {
-		"microbundle-crl": "*",
 		"babel-eslint": "*",
 		"cross-env": "*",
 		"eslint": "*",
@@ -45,6 +44,7 @@
 		"eslint-plugin-react": "*",
 		"eslint-plugin-standard": "*",
 		"gh-pages": "*",
+		"microbundle-crl": "^0.13.11",
 		"npm-run-all": "*",
 		"prettier": "*",
 		"react": "*",
